@@ -1,24 +1,27 @@
-import logo from './logo.svg';
 import './App.css';
+import LayoutContainer  from './components/layout-container'
+import { Routes, Route } from "react-router-dom";
+import CharacterList from './components/character-list';
+import CharacterCard from './components/character-card';
+import EpisodeList from './components/episode-list';
+import EpisodeCard from './components/episode-card';
+import LocationList from './components/location-list';
+
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <Routes>
+        <Route path="/" element={<LayoutContainer/>}>
+          <Route exact path="/character" element={<CharacterList />} />
+          <Route exact path="/character/:id" element={<CharacterCard />} />
+          <Route exact path="/episode" element={<EpisodeList />}/>
+          <Route exact path="/episode/:id" element={<EpisodeCard />}/>
+          <Route exact path="/location" element={<LocationList />}/>
+          
+        </Route>
+      </Routes>
+    </>
   );
 }
 
