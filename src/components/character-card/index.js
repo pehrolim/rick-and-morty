@@ -39,9 +39,12 @@ const CharacterCard = ({ match }) => {
               </Badge>
               <br />
               <Badge pill variant="info">
-                Location: {character.origin.name}
+                Origin: {character.origin.name}
               </Badge>
               <br />
+              <Badge pill variant="info">
+                Location: {character.location.name}
+              </Badge>
               <br />
               <Card.Title>Episodes </Card.Title>
               <ul>

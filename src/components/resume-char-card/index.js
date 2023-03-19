@@ -27,12 +27,6 @@ const EpisodeCharacter = ({ id }) => {
           <Card.Body>
             <Card.Title>{character.name}</Card.Title>
             <Card.Text>
-              <Badge
-                pill
-                variant={character.status === "Alive" ? "success" : "danger"}>
-                Status: {character.status}
-              </Badge>
-              <br />
               <Link to={`/character/${id}`}>
                 <Badge pill>Character Detail</Badge>
               </Link>
