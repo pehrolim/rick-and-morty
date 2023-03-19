@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Card, Pagination } from "react-bootstrap";
+import { Card, Pagination, Badge } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { getCharacters } from "../../utils/http";
 
@@ -24,18 +24,31 @@ const CharacterList = () => {
   return (
     <div className="row">
       {characters.map((character) => (
-        <div key={character.id} className="col-12 col-md-4 col-lg-3 mb-3">
-          <Card>
-            <Card.Img variant="top" src={character.image} alt={character.name} />
-            <Card.Body>
-              <Card.Title>{character.name}</Card.Title>
-              <Card.Text>Status: {character.status}</Card.Text>
-              <Card.Text>Species: {character.species}</Card.Text>
-              <Card.Text>Location: {character.location.name}</Card.Text>
-              <Link to={`/character/${character.id}`}>Details</Link>
-            </Card.Body>
-          </Card>
-        </div>
+        <article>
+          <div key={character.id} className="col-12 col-md-4 col-lg-3 mb-3">
+            <Card>
+              <Card.Img
+                variant="top"
+                src={character.image}
+                alt={character.name}
+              />
+              <Card.Body>
+                <Card.Title>{character.name}</Card.Title>
+                <Card.Text>
+                  <Badge>Status: {character.status}</Badge>
+                  <br />
+                  <Badge>Species: {character.species}</Badge>
+                  <br />
+                  <Badge>Location: {character.location.name}</Badge>
+                  <br />
+                  <Link to={`/character/${character.id}`}>
+                    <Badge>Character Details</Badge>
+                  </Link>
+                </Card.Text>
+              </Card.Body>
+            </Card>
+          </div>
+        </article>
       ))}
       <div className="col-12">
         <Pagination className="justify-content-center">
@@ -47,15 +60,7 @@ const CharacterList = () => {
             disabled={currentPage === 1}
             onClick={() => onPageChange(currentPage - 1)}
           />
-          {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
-            <Pagination.Item
-              key={page}
-              active={page === currentPage}
-              onClick={() => onPageChange(page)}
-            >
-              {page}
-            </Pagination.Item>
-          ))}
+          <Pagination.Item>{currentPage}</Pagination.Item>
           <Pagination.Next
             disabled={currentPage === totalPages}
             onClick={() => onPageChange(currentPage + 1)}

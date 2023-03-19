@@ -2,10 +2,9 @@ import React, { useEffect, useState } from "react";
 import { Card, Badge } from "react-bootstrap";
 import { getCharacter } from "../../utils/http";
 import { useParams } from "react-router";
-import EpisodeName from "../char-episode";
+import { Link } from "react-router-dom";
 
-const CharacterCard = ({ match }) => {
-  const { id } = useParams();
+const EpisodeCharacter = ({ id }) => {
   const [character, setCharacter] = useState(null);
 
   useEffect(() => {
@@ -34,23 +33,9 @@ const CharacterCard = ({ match }) => {
                 Status: {character.status}
               </Badge>
               <br />
-              <Badge pill variant="secondary">
-                Species: {character.species}
-              </Badge>
-              <br />
-              <Badge pill variant="info">
-                Location: {character.origin.name}
-              </Badge>
-              <br />
-              <br />
-              <Card.Title>Episodes </Card.Title>
-              <ul>
-                {character.episode.map((episode) => (
-                  <Badge key={episode}>
-                    <EpisodeName url={episode} />
-                  </Badge>
-                ))}
-              </ul>
+              <Link to={`/character/${id}`}>
+                <Badge pill>Character Detail</Badge>
+              </Link>
             </Card.Text>
           </Card.Body>
         </Card>
@@ -59,4 +44,4 @@ const CharacterCard = ({ match }) => {
   );
 };
 
-export default CharacterCard;
+export default EpisodeCharacter;

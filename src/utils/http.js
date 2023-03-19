@@ -15,7 +15,7 @@ export const getCharacter = async (id) => {
   return response.data;
 };
 
-export default http
+export default http;
 
 export const getEpisode = async (id) => {
   const response = await http.get(`/episode/${id}`);
@@ -33,11 +33,11 @@ export const getLocations = async (page) => {
 };
 
 export const getLocation = async (id) => {
-  const response = await http.get(`/location/:id`);
+  const response = await http.get(`/location/${id}`);
   return response.data;
 };
 
 export const CharEpisode = async (url) => {
-  const response = await axios.create(url)
-  return response.data
-}
+  const response = await axios.create(url);
+  return response.data;
+};

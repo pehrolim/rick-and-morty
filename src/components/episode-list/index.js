@@ -1,22 +1,24 @@
 import React, { useEffect, useState } from "react";
-import { Badge, Card, Button } from "react-bootstrap";
+import { Badge, Card, Pagination } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { getEpisodes } from "../../utils/http";
 
 const EpisodeList = () => {
   const [episodes, setEpisodes] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(0);
 
   useEffect(() => {
     const fetchEpisodes = async () => {
       const data = await getEpisodes(currentPage);
       setEpisodes(data.results);
+      setTotalPages(data.info.pages);
     };
     fetchEpisodes();
   }, [currentPage]);
 
-  const handlePageChange = (pageNumber) => {
-    setCurrentPage(pageNumber);
+  const onPageChange = (page) => {
+    setCurrentPage(page);
   };
 
   return (
@@ -38,21 +40,25 @@ const EpisodeList = () => {
         </div>
       ))}
       <div className="col-12 d-flex justify-content-center">
-        <Button
-          variant="primary"
-          disabled={currentPage === 1}
-          onClick={() => handlePageChange(currentPage - 1)}
-        >
-          Previous Page
-        </Button>
-        <Button
-          variant="primary"
-          className="ml-2"
-          disabled={episodes.length === 0}
-          onClick={() => handlePageChange(currentPage + 1)}
-        >
-          Next Page
-        </Button>
+        <Pagination className="justify-content-center">
+          <Pagination.First
+            disabled={currentPage === 1}
+            onClick={() => onPageChange(1)}
+          />
+          <Pagination.Prev
+            disabled={currentPage === 1}
+            onClick={() => onPageChange(currentPage - 1)}
+          />
+          <Pagination.Item>{currentPage}</Pagination.Item>
+          <Pagination.Next
+            disabled={currentPage === totalPages}
+            onClick={() => onPageChange(currentPage + 1)}
+          />
+          <Pagination.Last
+            disabled={currentPage === totalPages}
+            onClick={() => onPageChange(totalPages)}
+          />
+        </Pagination>
       </div>
     </div>
   );

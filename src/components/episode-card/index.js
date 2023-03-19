@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { Badge, Card } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { useParams } from "react-router";
 import { getEpisode } from "../../utils/http";
-import CharacterList from '../character-list';
+import EpisodeCharacter from "../resume-char-card";
 
-const EpisodeCard = ({ id }) => {
+const EpisodeCard = ({ match }) => {
+  const { id } = useParams();
   const [episode, setEpisode] = useState(null);
 
   useEffect(() => {
@@ -20,17 +21,26 @@ const EpisodeCard = ({ id }) => {
   }
 
   return (
-    <Card>
-      <Card.Body>
-        <Card.Title>{episode.name}</Card.Title>
-        <Card.Text>
-          <Badge pill variant="info">
-            Date: {episode.air_date}
-          </Badge>
-        </Card.Text>
-        <CharacterList characters={episode.characters} />
-      </Card.Body>
-    </Card>
+    <div>
+      <Card>
+        <Card.Body>
+          <Card.Title>{episode.name}</Card.Title>
+          <Card.Text>
+            <Badge pill variant="info">
+              Date: {episode.air_date}
+            </Badge>
+          </Card.Text>
+          <Card.Title>Characters</Card.Title>
+          <ul>
+            {episode.characters.map((characters) => (
+              <div>
+                <EpisodeCharacter id={characters.split("/").slice(-1)} />{" "}
+              </div>
+            ))}
+          </ul>
+        </Card.Body>
+      </Card>
+    </div>
   );
 };
 
